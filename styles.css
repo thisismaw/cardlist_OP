@@ -1,0 +1,55 @@
+/* Reset some default styles */
+body, h1, h2, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Basic styling for header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+/* Styling for featured products section */
+.featured-products {
+    /* Add styles for featured products on mobile view */
+}
+
+/* Styling for product categories section */
+.product-categories {
+    /* Add styles for product categories on mobile view */
+}
+
+/* Styling for all products section */
+.all-products {
+    /* Add styles for displaying all products on mobile view */
+}
+
+/* Basic styling for footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+/* Media query for tablets (600px and above) */
+@media screen and (min-width: 600px) {
+    /* Add styles for tablets */
+}
+
+/* Media query for desktops (900px and above) */
+@media screen and (min-width: 900px) {
+    /* Add styles for desktops */
+}
+
+/* Media query for larger screens (1200px and above) */
+@media screen and (min-width: 1200px) {
+    /* Add styles for larger screens */
+}
