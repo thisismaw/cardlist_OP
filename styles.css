@@ -1,3 +1,14 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  max-width: 100vw; /* Limit width to the viewport width */
+  overflow-x: hidden; /* Hide horizontal overflow */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box; /* Include padding and borders in the element's width */
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,8 +17,8 @@ body {
 }
 
 header {
-  background-color: #ffcb05;
-  color: #3b4cca;
+  background-color: #FF704D;
+  color: white;
   padding: 1em;
   text-align: center;
 }
@@ -23,7 +34,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #3b4cca;
+  color: white;
   text-decoration: none;
   font-weight: bold;
 }
@@ -57,20 +68,20 @@ footer {
 
 .carousel-slide {
   position: relative;
-  min-width: 160px; /* Width of each slide */
-  margin: 10px;
+  min-width: 96px;
+  min-height: 150px;
   border: 2px solid #3b4cca; /* Adds a border to each slide */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for depth */
   border-radius: 10px; /* Optional: Rounds the corners */
   transition: transform 0.3s ease; /* Smooth transition effect */
-
+  height: 400px; /* Adjust this value as needed */
 }
 
 .carousel-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px; /* Ensures the image corners are also rounded */
+  width: 100%; /* Ensures the image takes the full width of the div */
+  height: 100%; /* Ensures the image takes the full height of the div */
+  object-fit: cover; /* Makes the image cover the entire div */
+  border-radius: 8px; /* Keeps the rounded corners if needed */
   transition: transform 0.3s ease; /* Transition effect for the image */
   filter: grayscale(100%);
 }
@@ -83,6 +94,7 @@ footer {
 .carousel-slide:hover img {
   transform: scale(1.1); /* Scales up the image */
   filter: grayscale(30%);
+  cursor: pointer;
 }
 
 .carousel-text {
@@ -136,4 +148,117 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+
+
+/* Base CSS - applies to all devices */
+/* Your existing CSS goes here... */
+
+/* Base CSS - applies to all devices */
+/* Your existing CSS goes here... */
+
+/* Media Queries for Mobile Phones */
+@media only screen and (max-width: 600px) {
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+header {
+    padding: 0.5em;
+}
+
+nav ul li {
+    display: block;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.category-carousel {
+    padding: 0 10px; /* Adjust padding for mobile */
+}
+
+.carousel-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: space-around; /* Distribute space around items */
+  align-items: stretch; /* Stretch items to fill the container */
+}
+
+.category-carousel, .carousel-container {
+  width: 100%; /* Adjust the width to be 100% of the viewport */
+  overflow-x: hidden; /* Ensure no horizontal overflow */
+}
+
+.carousel-slide {
+  width: calc(33.333% - 5px); /* Adjust width for each slide */
+    height: auto; /* Adjust height automatically */
+    min-width: 100px; /* Minimum width for each slide */
+    margin-right: 5px; /* Add some space between slides */
+}
+
+.carousel-slide img {
+    width: 100%; /* Full width of the slide */
+    
+}
+#latest-news {
+    width: 95%;
+    margin: 10px auto;
+}
+
+footer {
+    padding: 0.5em;
+}
+}
+
+
+/* Media Queries for Tablets */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+
+  
+  header {
+      padding: 0.75em;
+  }
+
+  nav ul li {
+      display: inline-block; /* More space for tablet */
+      margin: 0 5px;
+  }
+
+  .category-carousel {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.carousel-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: space-around; /* Distribute space around items */
+  align-items: stretch; /* Stretch items to fill the container */
+}
+
+  .carousel-slide {
+    flex: 0 0 calc(33.33% - 10px); /* Set width to a third of the container minus margin */
+    margin: 5px; /* Add some margin for spacing */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+  }
+
+  .carousel-slide img {
+        width: 100%; /* Ensure images stretch to the width of the slide */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+
+  #latest-news {
+      width: 90%;
+  }
+
+  footer {
+      padding: 0.75em;
+  }
+}
+
+/* Media Queries for Laptops and Desktops */
+@media only screen and (min-width: 1025px) {
+  /* This will apply your existing styles which are suitable for larger screens */
 }
