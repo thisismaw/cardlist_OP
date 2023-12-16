@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  max-width: 100vw; /* Limit width to the viewport width */
+  overflow-x: hidden; /* Hide horizontal overflow */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box; /* Include padding and borders in the element's width */
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+header {
+  background-color: #4a69bd;
+  color: #fff;
+  padding: 1em;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: #f8f9fa;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Media Queries for Mobile Phones */
+@media only screen and (max-width: 600px) {
+  header {
+    padding: 0.5em;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 5px 0;
+    text-align: center;
+  }
+}
+
+/* Media Queries for Tablets */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  header {
+    padding: 0.75em;
+  }
+
+  nav ul li {
+    display: inline-block; /* More space for tablet */
+    margin: 0 5px;
+  }
+}
+
+.breadcrumb {
+    list-style: none;
+    display: flex;
+    padding: 0;
+}
+
+.breadcrumb li {
+    margin-right: 10px;
+}
+
+.breadcrumb li::after {
+    content: '/';
+    margin-left: 10px;
+}
+
+.breadcrumb li:last-child::after {
+    content: '';
+    margin: 0;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: #0275d8;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
