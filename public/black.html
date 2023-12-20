@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPVault - Black Category</title>
+    <link rel="stylesheet" href="blackstyles.css">
+    <link rel="stylesheet" href="header-styles.css">
+</head>
+<body>
+    <!-- ... existing content ... -->
+
+    <main>
+        <section id="black-category">
+            <h2>Black Category</h2>
+            <div id="cardsContainer">
+                <!-- Card data will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- ... existing footer ... -->
+    <script>
+        fetch('/data')
+            .then(response => response.json())
+            .then(cards => {
+                const container = document.getElementById('cardsContainer');
+                console.log(cards);
+    
+                function processArray(arr) {
+                    arr.forEach(item => {
+                        if (Array.isArray(item)) {
+                            processArray(item); // Recurse if the item is an array
+                        } else {
+                            // Iterate over each name in the cardName array
+                            item.cardName.forEach((name, index) => {
+                                const cardElement = document.createElement('div');
+                                cardElement.className = 'product';
+    
+                                // Access the first two properties of the frontCol object
+                                const firstProperty = item.frontCol[index].img_src;
+                                const secondProperty = item.frontCol[index].text;
+                                
+                                let firstPropertyBack = item.backCol[index].attribute;
+                        
+                                // Insert space before capital letters in firstPropertyBack
+                                firstPropertyBack = firstPropertyBack.replace(/([A-Z])/g, ' - $1').trim();
+    
+                                // Constructing the card content for each name
+                                cardElement.innerHTML = `
+                                    <img src="${item.frontCol[index].imageUrl}">
+                                    <h3>${name}</h3>
+                                    <div class="info">${item.infoCol[index]}</div>
+                                    <div class="front">${firstProperty} - ${secondProperty}</div>
+                                    <div class="back">${firstPropertyBack}</div>
+                                    <p>${item.backCol[index].price}</p>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                `;
+    
+                                container.appendChild(cardElement);
+                            });
+                        }
+                    });
+                }
+    
+                processArray(cards);
+            })
+            .catch(error => console.error('Error fetching card data:', error));
+    </script>
+    
+    
+</body>
+</html>

@@ -1,5 +1,16 @@
 {
   "dependencies": {
+    "axios": "^1.6.2",
+    "express": "^4.18.2",
     "mongodb": "^6.3.0"
-  }
+  },
+  "name": "cardlist_op",
+  "description": "OP card stocks and card tracking",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "WillemPacardo",
+  "license": "ISC"
 }
