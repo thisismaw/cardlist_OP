@@ -27,7 +27,7 @@ client = MongoClient(atlas_connection_uri)
 db = client['OnePiece']
 
 # Select your collection
-collection = db['op06']
+collection = db['OPdb']
 
 # URL to scrape
 url = 'https://asia-en.onepiece-cardgame.com/cardlist/?series=556106'

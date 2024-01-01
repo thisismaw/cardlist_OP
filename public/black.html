@@ -9,7 +9,17 @@
 </head>
 <body>
     <!-- ... existing content ... -->
-
+    <header>
+        <h1>OP Vault!</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Card List</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
         <section id="black-category">
             <h2>Black Category</h2>
@@ -27,37 +37,44 @@
                 const container = document.getElementById('cardsContainer');
                 console.log(cards);
     
-                function processArray(arr) {
+                function processArray(arr) {   
                     arr.forEach(item => {
                         if (Array.isArray(item)) {
                             processArray(item); // Recurse if the item is an array
                         } else {
                             // Iterate over each name in the cardName array
                             item.cardName.forEach((name, index) => {
-                                const cardElement = document.createElement('div');
-                                cardElement.className = 'product';
-    
-                                // Access the first two properties of the frontCol object
-                                const firstProperty = item.frontCol[index].img_src;
-                                const secondProperty = item.frontCol[index].text;
+                                let firstProperyColor = item.backCol[index].color;
                                 
-                                let firstPropertyBack = item.backCol[index].attribute;
-                        
-                                // Insert space before capital letters in firstPropertyBack
-                                firstPropertyBack = firstPropertyBack.replace(/([A-Z])/g, ' - $1').trim();
+                                // Check if the color property is "ColorBlack"
+                                if (firstProperyColor === "ColorBlack") {
+                                    const cardElement = document.createElement('div');
+                                    cardElement.className = 'product';
     
-                                // Constructing the card content for each name
-                                cardElement.innerHTML = `
-                                    <img src="${item.frontCol[index].imageUrl}">
-                                    <h3>${name}</h3>
-                                    <div class="info">${item.infoCol[index]}</div>
-                                    <div class="front">${firstProperty} - ${secondProperty}</div>
-                                    <div class="back">${firstPropertyBack}</div>
-                                    <p>${item.backCol[index].price}</p>
-                                    <button class="add-to-cart">Add to Cart</button>
-                                `;
+                                    // Access the first two properties of the frontCol object
+                                    const firstProperty = item.frontCol[index].img_src;
+                                    const secondProperty = item.frontCol[index].text;
+                                    
+                                    let firstPropertyBack = item.backCol[index].attribute;
+                                    
+                                    // Insert space before the second capital letter
+                                    firstPropertyBack = firstPropertyBack.replace(/(.*?[A-Z].*?)([A-Z])/, '$1 : $2');
+                                    let firstPropertyColor = firstProperyColor.replace(/(.*?[A-Z].*?)([A-Z])/, '$1 : $2')
+                                    
+                                    // Constructing the card content for each name
+                                    cardElement.innerHTML = `
+                                        <img src="${item.frontCol[index].imageUrl}">
+                                        <h3>${name}</h3>
+                                        <div class="info">${item.infoCol[index]}</div>
+                                        <div class="front">${firstProperty} - ${secondProperty}</div>
+                                        <div class="back">${firstPropertyBack}</div>
+                                        <div class="color">${firstPropertyColor}</div>
+                                        <p>${item.backCol[index].price}</p>
+                                        <button class="add-to-cart">Add to Cart</button>
+                                    `;
     
-                                container.appendChild(cardElement);
+                                    container.appendChild(cardElement);
+                                }
                             });
                         }
                     });
@@ -67,7 +84,5 @@
             })
             .catch(error => console.error('Error fetching card data:', error));
     </script>
-    
-    
 </body>
 </html>
