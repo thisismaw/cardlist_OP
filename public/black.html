@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="header-styles.css">
 </head>
 <body>
-    <!-- ... existing content ... -->
     <header>
         <h1>OP Vault!</h1>
         <nav>
@@ -29,60 +28,80 @@
         </section>
     </main>
 
-    <!-- ... existing footer ... -->
+    <!-- Modal Structure -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <style>
+        .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4); }
+        .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
+        .close:hover, .close:focus { color: black; text-decoration: none; cursor: pointer; }
+    </style>
+
     <script>
         fetch('/data')
             .then(response => response.json())
             .then(cards => {
                 const container = document.getElementById('cardsContainer');
-                console.log(cards);
-    
-                function processArray(arr) {   
-                    arr.forEach(item => {
-                        if (Array.isArray(item)) {
-                            processArray(item); // Recurse if the item is an array
-                        } else {
-                            // Iterate over each name in the cardName array
-                            item.cardName.forEach((name, index) => {
-                                let firstProperyColor = item.backCol[index].color;
-                                
-                                // Check if the color property is "ColorBlack"
-                                if (firstProperyColor === "ColorBlack") {
-                                    const cardElement = document.createElement('div');
-                                    cardElement.className = 'product';
-    
-                                    // Access the first two properties of the frontCol object
-                                    const firstProperty = item.frontCol[index].img_src;
-                                    const secondProperty = item.frontCol[index].text;
-                                    
-                                    let firstPropertyBack = item.backCol[index].attribute;
-                                    
-                                    // Insert space before the second capital letter
-                                    firstPropertyBack = firstPropertyBack.replace(/(.*?[A-Z].*?)([A-Z])/, '$1 : $2');
-                                    let firstPropertyColor = firstProperyColor.replace(/(.*?[A-Z].*?)([A-Z])/, '$1 : $2')
-                                    
-                                    // Constructing the card content for each name
-                                    cardElement.innerHTML = `
-                                        <img src="${item.frontCol[index].imageUrl}">
-                                        <h3>${name}</h3>
-                                        <div class="info">${item.infoCol[index]}</div>
-                                        <div class="front">${firstProperty} - ${secondProperty}</div>
-                                        <div class="back">${firstPropertyBack}</div>
-                                        <div class="color">${firstPropertyColor}</div>
-                                        <p>${item.backCol[index].price}</p>
-                                        <button class="add-to-cart">Add to Cart</button>
-                                    `;
-    
-                                    container.appendChild(cardElement);
-                                }
+
+                cards.forEach(card => {
+                    card.cardName.forEach((name, index) => {
+                        if (card.backCol[index].color === "ColorBlack") {
+                            const cardElement = document.createElement('div');
+                            cardElement.className = 'product';
+                            cardElement.innerHTML = `
+                                <img src="${card.frontCol[index].imageUrl}">
+                                <h3>${name}</h3>
+                                <div class="info">${card.infoCol[index]}</div>
+                                <div class="front">${card.frontCol[index].text}</div>
+                                <div class="back">${card.backCol[index].attribute}</div>
+                                <div class="color">${card.backCol[index].color}</div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            `;
+                            container.appendChild(cardElement);
+
+                            const addToCartButton = cardElement.querySelector('.add-to-cart');
+                            addToCartButton.addEventListener('click', function(event) {
+                                event.stopPropagation(); 
+                                showModal(card, index);
                             });
                         }
                     });
-                }
-    
-                processArray(cards);
+                });
             })
             .catch(error => console.error('Error fetching card data:', error));
+
+        function showModal(card, index) {
+            const modal = document.getElementById("myModal");
+            const modalBody = document.getElementById("modalBody");
+            const span = document.getElementsByClassName("close")[0];
+
+            modal.style.display = "block";
+            modalBody.innerHTML = `
+                <h3>${card.cardName[index]}</h3>
+                <img src="${card.frontCol[index].imageUrl}" alt="Card Image">
+                <div>Info: ${card.infoCol[index]}</div>
+                <div>Front: ${card.frontCol[index].text}</div>
+                <div>Back: ${card.backCol[index].attribute}</div>
+                <div>Color: ${card.backCol[index].color}</div>
+                <div>Price: ${card.backCol[index].price}</div>
+            `;
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            };
+
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            };
+        }
     </script>
 </body>
 </html>
