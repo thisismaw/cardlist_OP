@@ -6,6 +6,7 @@
     <title>OPVault - Black Category</title>
     <link rel="stylesheet" href="blackstyles.css">
     <link rel="stylesheet" href="header-styles.css">
+    <link rel="stylesheet" href="modal-style.css">
 </head>
 <body>
     <header>
@@ -61,7 +62,7 @@
                                 <div class="front">${card.frontCol[index].text}</div>
                                 <div class="back">${card.backCol[index].attribute}</div>
                                 <div class="color">${card.backCol[index].color}</div>
-                                <button class="add-to-cart">Add to Cart</button>
+                                <button class="add-to-cart">More Info</button>
                             `;
                             container.appendChild(cardElement);
 
@@ -90,6 +91,7 @@
                 <div>Back: ${card.backCol[index].attribute}</div>
                 <div>Color: ${card.backCol[index].color}</div>
                 <div>Price: ${card.backCol[index].price}</div>
+                <div>${card.backCol[index].text}</div>
             `;
 
             span.onclick = function() {
