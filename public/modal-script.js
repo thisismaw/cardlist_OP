@@ -9,8 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (card.backCol[index].color === "ColorBlack") {
                         const cardElement = document.createElement('div');
                         cardElement.className = 'product';
+
+                                    // Extract the relative path from the img_src and append it to the new base URL
+                                    let imgPath = card.frontCol[index].img_src.split('../images/')[1];
+                                    let newImgSrc = 'https://asia-en.onepiece-cardgame.com/images/' + imgPath;
                         cardElement.innerHTML = `
-                            <img src="${card.frontCol[index].imageUrl}">
+                            <img src="${newImgSrc}">
                             <h3>${name}</h3>
                             <div class="info">${card.infoCol[index]}</div>
                             <div class="front">${card.frontCol[index].text}</div>
@@ -43,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div>Front: ${card.frontCol[index].text}</div>
             <div>Back: ${card.backCol[index].attribute}</div>
             <div>Color: ${card.backCol[index].color}</div>
-            <div>Price: ${card.backCol[index].price}</div>
+            
         `;
 
         span.onclick = () => modal.style.display = 'none';
