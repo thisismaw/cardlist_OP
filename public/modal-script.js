@@ -7,54 +7,47 @@ document.addEventListener('DOMContentLoaded', () => {
             cards.forEach(card => {
                 card.cardName.forEach((name, index) => {
                     if (card.backCol[index].color === "ColorBlack") {
+                        let imgPath = card.frontCol[index].img_src.split('../images/')[1];
+                        let newImgSrc ='https://asia-en.onepiece-cardgame.com/images/' + imgPath;
                         const cardElement = document.createElement('div');
                         cardElement.className = 'product';
-
-                                    // Extract the relative path from the img_src and append it to the new base URL
-                                    let imgPath = card.frontCol[index].img_src.split('../images/')[1];
-                                    let newImgSrc = 'https://asia-en.onepiece-cardgame.com/images/' + imgPath;
                         cardElement.innerHTML = `
-                            <img src="${newImgSrc}">
+                            <img src="${newImgSrc}" class="clickable-image" alt="Card Image">
                             <h3>${name}</h3>
-                            <div class="info">${card.infoCol[index]}</div>
-                            <div class="front">${card.frontCol[index].text}</div>
-                            <div class="back">${card.backCol[index].attribute}</div>
-                            <div class="color">${card.backCol[index].color}</div>
-                            <button class="add-to-cart">Add to Cart</button>
+
                         `;
                         container.appendChild(cardElement);
-
-                        cardElement.querySelector('.add-to-cart').addEventListener('click', function(event) {
-                            event.stopPropagation();
-                            showModal(card, index);
+    
+                        const imageElement = cardElement.querySelector('.clickable-image');
+                        imageElement.addEventListener('click', function() {
+                            showModal(card, index, newImgSrc);
                         });
                     }
                 });
             });
         })
         .catch(error => console.error('Error fetching card data:', error));
-
-    function showModal(card, index) {
+    
+    function showModal(card, index, newImgSrc) {
         const modal = document.getElementById('myModal');
         const modalBody = document.getElementById('modalBody');
-        const span = document.getElementsByClassName('close')[0];
-
+    
         modal.style.display = 'block';
         modalBody.innerHTML = `
             <h3>${card.cardName[index]}</h3>
-            <img src="${card.frontCol[index].imageUrl}" alt="Card Image">
+            <img src="${newImgSrc}" alt="Card Image">
             <div>Info: ${card.infoCol[index]}</div>
             <div>Front: ${card.frontCol[index].text}</div>
             <div>Back: ${card.backCol[index].attribute}</div>
             <div>Color: ${card.backCol[index].color}</div>
-            
-        `;
+            `;
 
-        span.onclick = () => modal.style.display = 'none';
-        window.onclick = (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        };
-    }
+    const span = document.getElementsByClassName('close')[0];
+    span.onclick = () => modal.style.display = 'none';
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+}
 });

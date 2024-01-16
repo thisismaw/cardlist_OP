@@ -49,4 +49,48 @@
     margin-top: 10px;
     color: #555;
     line-height: 1.6;
+    display: flex;
+    justify-content: center;
 }
+
+.modal-content {
+    display: flex;
+    align-items: flex-start; /* Aligns items to the start of the flex container */
+    background-color: #fff;
+    margin: 5% auto; /* Centers the modal and adds margin from top */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0, 0, 0.2);
+    width: 50%; /* Set the modal width to 50% of the screen width /
+max-width: 600px; / Optional: You can set a max-width if needed */
+}
+
+.modal-image-container {
+flex: 1; /* Adjust the ratio if needed /
+max-width: 40%; / Adjust the maximum width of the image container /
+padding-right: 20px; / Space between the image and the text */
+}
+
+.modal-image-container img {
+width: 100%;
+height: auto;
+border-radius: 8px;
+}
+
+.modal-text-container {
+flex: 2; /* Adjust the ratio if needed /
+padding-left: 20px; / Space between the text and the image */
+display: flex;
+flex-direction: column;
+ margin-left: 10px;
+ text-align: center;
+}
+
+.modal-text-container h3 {
+margin-bottom: 10px;
+}
+
+.modal-text-container div {
+margin-bottom: 8px;
+}
+/* Continue with the rest of your modal styles... */
