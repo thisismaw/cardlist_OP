@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 // Endpoint to serve card data from MongoDB
 app.get('/data', async (req, res) => {
     try {
-        const collection = client.db('OnePiece').collection('OnePieceCards');
+        const collection = client.db('OnePiece').collection('OPdb');
         const data = await collection.find({}).toArray();
         res.json(data);
     } catch (e) {

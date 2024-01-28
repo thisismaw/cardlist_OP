@@ -22,11 +22,8 @@ def scrape_data(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Extracting data from 'infoCol' and 'cardName' classes
     info_texts = [info.get_text(strip=True) for info in soup.find_all(class_='infoCol')]
     card_names = [name.get_text(strip=True) for name in soup.find_all(class_='cardName')]
-
-    # Extracting data from 'frontCol' and 'backCol' classes
     front_data = [{'text': front.get_text(strip=True), 'img_src': get_img_src(front)} for front in soup.find_all(class_='frontCol')]
     back_data = [get_backcol_data(back) for back in soup.find_all(class_='backCol')]
 
@@ -37,13 +34,18 @@ def scrape_data(url):
         "backCol": back_data
     }
 
+def card_exists(collection, card_name):
+    """ Check if a card with the given name already exists in the database """
+    return collection.count_documents({"cardName": card_name}) > 0
+
 # MongoDB setup
-client = MongoClient("mongodb+srv://admin:8883mb@onepiece.c2dddqy.mongodb.net/?retryWrites=true&w=majority")  # Replace with your MongoDB URI
-db = client["OnePiece"]  # Replace with your database name
-collection = db["OPdb"]  # Replace with your collection name
+client = MongoClient("mongodb+srv://admin:8883mb@onepiece.c2dddqy.mongodb.net/?retryWrites=true&w=majority")
+db = client["OnePiece"]
+collection = db["OPdb"]
 
 # List of URLs to scrape
 urls = [
+    'https://asia-en.onepiece-cardgame.com/cardlist/?series=556201',
     'https://asia-en.onepiece-cardgame.com/cardlist/?series=556106',
     'https://asia-en.onepiece-cardgame.com/cardlist/?series=556105',
     'https://asia-en.onepiece-cardgame.com/cardlist/?series=556104',
@@ -79,12 +81,16 @@ aggregated_data = {
 # Scrape data and aggregate
 for url in urls:
     scraped_data = scrape_data(url)
-    aggregated_data['infoCol'].extend(scraped_data['infoCol'])
-    aggregated_data['cardName'].extend(scraped_data['cardName'])
-    aggregated_data['frontCol'].extend(scraped_data['frontCol'])
-    aggregated_data['backCol'].extend(scraped_data['backCol'])
+    for i, card_name in enumerate(scraped_data['cardName']):
+        if not card_exists(collection, card_name):
+            aggregated_data['infoCol'].append(scraped_data['infoCol'][i] if i < len(scraped_data['infoCol']) else None)
+            aggregated_data['cardName'].append(card_name)
+            aggregated_data['frontCol'].append(scraped_data['frontCol'][i] if i < len(scraped_data['frontCol']) else None)
+            aggregated_data['backCol'].append(scraped_data['backCol'][i] if i < len(scraped_data['backCol']) else None)
 
-# Insert aggregated data into MongoDB
-collection.insert_one(aggregated_data)
-
-print("Aggregated data has been successfully inserted into MongoDB.")
+# Insert aggregated data into MongoDB as a single document
+if aggregated_data['cardName']:  # Check if there is any new data
+    collection.insert_one(aggregated_data)
+    print("New unique data inserted into MongoDB.")
+else:
+    print("No new data to insert.")
