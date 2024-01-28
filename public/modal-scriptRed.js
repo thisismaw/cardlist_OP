@@ -28,26 +28,31 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error fetching card data:', error));
     
-    function showModal(card, index, newImgSrc) {
-        const modal = document.getElementById('myModal');
-        const modalBody = document.getElementById('modalBody');
-    
-        modal.style.display = 'block';
-        modalBody.innerHTML = `
-            <h3>${card.cardName[index]}</h3>
-            <img src="${newImgSrc}" alt="Card Image">
-            <div>Info: ${card.infoCol[index]}</div>
-            <div>Front: ${card.frontCol[index].text}</div>
-            <div>Back: ${card.backCol[index].attribute}</div>
-            <div>Color: ${card.backCol[index].color}</div>
+        function showModal(card, index, newImgSrc) {
+            const modal = document.getElementById('myModal');
+            const modalBody = document.getElementById('modalBody');
+        
+            modal.style.display = 'block';
+            modalBody.innerHTML = `
+                <div class="modal-image-container">
+                    <img src="${newImgSrc}" alt="Card Image">
+                </div>
+                <div class="modal-text-container">
+                    <h3>${card.cardName[index]}</h3>
+                    <div>Info: ${card.infoCol[index]}</div>
+                    <div>Front: ${card.frontCol[index].text}</div>
+                    <div>Back: ${card.backCol[index].attribute}</div>
+                    <div>Color: ${card.backCol[index].color}</div>
+                </div>
             `;
-
-    const span = document.getElementsByClassName('close')[0];
-    span.onclick = () => modal.style.display = 'none';
-    window.onclick = (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
+        
+            const span = document.getElementsByClassName('close')[0];
+            span.onclick = () => modal.style.display = 'none';
+            window.onclick = (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
         }
-    };
-}
+        
 });
