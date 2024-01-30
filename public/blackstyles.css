@@ -76,7 +76,13 @@ html, body {
     width: calc(20% - 20px); /* 5 columns on large screens */
   }
   #cardsContainer {
-    padding: 120px;
+    padding:0 120px;
   }
 }
+@media (min-width: 1440px) {
+  #cardsContainer {
+    padding:0 250px;
+  }
+}
+
 
